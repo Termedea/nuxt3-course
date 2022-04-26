@@ -66,44 +66,18 @@ const optionsArray = [
         v-for="(option, i) in optionsArray"
         :key="`option_${i}`"
         :option="option"
-        optionState="optionState"
+        :optionState="optionState"
       ></Option>
       <button class="button button--rounded button--secondary" @click="computeSelectedNames">Find names</button>
     </section>
     <section class="cards">
-      <div v-for="(name, i) in selectedNames" :key="`${name}_${i}`" class="card">
-        <h4 class="card__name">{{ name }}</h4>
-        <span class="card__close">x</span>
-      </div>
+      <CardName v-for="(name, i) in selectedNames" :key="`name_${i}`" class="card" :name="name" />
     </section>
   </main>
 </template>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
-
-.page {
-  color: rgb(27, 60, 138);
-  max-width: 50rem;
-  margin: 0 auto;
-  text-align: center;
-  font-family: 'Alegreya Sas', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-h1 {
-  font-size: 3rem;
-}
-.options {
-  background-color: rgb(255, 238, 236);
-  border-radius: 2rem;
-  padding: 1rem;
-  width: 95%;
-  margin: 0 auto;
-  margin-top: 4rem;
-  position: relative;
-}
-.option {
-  margin-bottom: 2rem;
-}
 
 .button {
   border: none;
@@ -146,34 +120,33 @@ h1 {
 .button--right {
   border-radius: 0 1rem 1rem 0;
 }
+</style>
+<style scoped>
+.page {
+  color: rgb(27, 60, 138);
+  max-width: 50rem;
+  margin: 0 auto;
+  text-align: center;
+  font-family: 'Alegreya Sas', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+h1 {
+  font-size: 3rem;
+}
+.options {
+  background-color: rgb(255, 238, 236);
+  border-radius: 2rem;
+  padding: 1rem;
+  width: 95%;
+  margin: 0 auto;
+  margin-top: 4rem;
+  position: relative;
+}
+
 .cards {
   display: flex;
   gap: 2rem;
   margin-top: 1rem;
-
-  flex-wrap: wrap;
-}
-.card {
-  background: linear-gradient(to bottom, hsl(222, 67%, 92%) 0%, hsl(222, 67%, 82%));
-  border: 0.15rem solid rgb(27, 60, 138);
-  border-radius: 1rem;
-  flex-basis: 18%;
-  display: flex;
-  align-items: flex-start;
   justify-content: center;
-  padding: 0 0.4rem;
-}
-.card__close {
-  display: inline-block;
-  font-weight: 900;
-  cursor: pointer;
-  color: hsl(222, 67%, 82%);
-}
-.card__close:hover {
-  color: rgb(27, 60, 138);
-}
-.card__name {
-  text-transform: uppercase;
-  flex-grow: 1;
+  flex-wrap: wrap;
 }
 </style>
