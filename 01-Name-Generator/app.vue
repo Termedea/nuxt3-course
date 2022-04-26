@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Gender, Popularity, Length, namesList } from '@/data';
 /* Semicolons in interface */
 interface OptionState {
   gender: Gender;
@@ -6,29 +7,51 @@ interface OptionState {
   length: Length;
 }
 
-import { Gender, Popularity, Length, namesList } from '@/data';
-/* Vue reactive and auto imported. <OptionState> sets the interfaces */
-const options = reactive<OptionState>({
+/* Vue reactive and auto imported.  */
+/* Object of type OptionState */
+const optionState = reactive<OptionState>({
   gender: Gender.GIRL,
   popularity: Popularity.TRENDY,
   length: Length.SHORT
 });
+
+/* ref */
 const selectedNames = ref<string[]>();
+
+/* Generate button click callback */
 const computeSelectedNames = () => {
   const filteredNames = namesList
-    .filter((name) => name.gender === options.gender)
-    .filter((name) => name.popularity === options.popularity)
+    .filter((name) => name.gender === optionState.gender)
+    .filter((name) => name.popularity === optionState.popularity)
     .filter((name) => {
-      if (options.length === Length.ALL) {
+      if (optionState.length === Length.ALL) {
         //doesn't matter if it's short or long
         return true;
       } else {
-        return name.length === options.length;
+        return name.length === optionState.length;
       }
     });
   /* Map to create strings from the name-object, since the selected names array needs strings not names. */
   selectedNames.value = filteredNames.map((name) => name.name);
 };
+
+const optionsArray = [
+  {
+    title: '1) Choose a gender',
+    category: 'gender',
+    buttons: [Gender.GIRL, Gender.UNISEX, Gender.BOY]
+  },
+  {
+    title: "2) Choose the name's popularity",
+    category: 'popularity',
+    buttons: [Popularity.TRENDY, Popularity.UNIQUE]
+  },
+  {
+    title: "3) Choose the name's length",
+    category: 'length',
+    buttons: [Length.SHORT, Length.ALL, Length.LONG]
+  }
+];
 
 /* With script setup can everything be accessed by the temlate. */
 </script>
@@ -38,77 +61,13 @@ const computeSelectedNames = () => {
     <h1>Name Generator</h1>
     <p>Chose your options and click the "Find names" button below.</p>
     <section class="options">
-      <div class="option option--gender">
-        <h4>1) Choose a gender</h4>
-        <div class="option__butons">
-          <button
-            class="button button--left button--primary"
-            :class="options.gender === Gender.BOY && 'button--active'"
-            @click="options.gender = Gender.BOY"
-          >
-            Boy
-          </button>
-          <button
-            class="button button--primary"
-            :class="options.gender === Gender.GIRL && 'button--active'"
-            @click="options.gender = Gender.GIRL"
-          >
-            Girl
-          </button>
-          <button
-            class="button button--right button--primary"
-            :class="options.gender === Gender.UNISEX && 'button--active'"
-            @click="options.gender = Gender.UNISEX"
-          >
-            Unisex
-          </button>
-        </div>
-      </div>
-      <div class="option option--popularity">
-        <h4>2) Choose the name's popularity</h4>
-        <div class="option__butons">
-          <button
-            class="button button--left button--primary"
-            :class="options.popularity === Popularity.UNIQUE && 'button--active'"
-            @click="options.popularity = Popularity.UNIQUE"
-          >
-            Unique
-          </button>
-          <button
-            class="button button--right button--primary"
-            :class="options.popularity === Popularity.TRENDY && 'button--active'"
-            @click="options.popularity = Popularity.TRENDY"
-          >
-            Trendy
-          </button>
-        </div>
-      </div>
-      <div class="option option--length">
-        <h4>3) Choose the name's length</h4>
-        <div class="option__butons">
-          <button
-            class="button button--left button--primary"
-            :class="options.length === Length.LONG && 'button--active'"
-            @click="options.length = Length.LONG"
-          >
-            Long
-          </button>
-          <button
-            class="button button--primary"
-            :class="options.length === Length.ALL && 'button--active'"
-            @click="options.length = Length.ALL"
-          >
-            Doesn't matter
-          </button>
-          <button
-            class="button button--right button--primary"
-            :class="options.length === Length.SHORT && 'button--active'"
-            @click="options.length = Length.SHORT"
-          >
-            Short
-          </button>
-        </div>
-      </div>
+      <!-- Automatically imported because it's in the component folder -->
+      <Option
+        v-for="(option, i) in optionsArray"
+        :key="`option_${i}`"
+        :option="option"
+        optionState="optionState"
+      ></Option>
       <button class="button button--rounded button--secondary" @click="computeSelectedNames">Find names</button>
     </section>
     <section class="cards">
