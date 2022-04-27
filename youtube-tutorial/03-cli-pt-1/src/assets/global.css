@@ -1,0 +1,9 @@
+body {
+  font-family: 'Radio Canada', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  background: linear-gradient(to bottom, rgb(176, 217, 217), rgb(92, 125, 125))
+    no-repeat;
+}
