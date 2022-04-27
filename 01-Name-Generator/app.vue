@@ -6,7 +6,6 @@ interface OptionState {
   popularity: Popularity;
   length: Length;
 }
-
 /* Vue reactive and auto imported.  */
 /* Object of type OptionState */
 const optionState = reactive<OptionState>({
@@ -14,6 +13,25 @@ const optionState = reactive<OptionState>({
   popularity: Popularity.TRENDY,
   length: Length.SHORT
 });
+
+/* For looping through and render buttons */
+const optionsArray = [
+  {
+    title: '1) Choose a gender',
+    category: 'gender',
+    buttons: [Gender.GIRL, Gender.UNISEX, Gender.BOY]
+  },
+  {
+    title: "2) Choose the name's popularity",
+    category: 'popularity',
+    buttons: [Popularity.TRENDY, Popularity.UNIQUE]
+  },
+  {
+    title: "3) Choose the name's length",
+    category: 'length',
+    buttons: [Length.SHORT, Length.ALL, Length.LONG]
+  }
+];
 
 /* ref */
 const selectedNames = ref<string[]>();
@@ -35,23 +53,9 @@ const computeSelectedNames = () => {
   selectedNames.value = filteredNames.map((name) => name.name);
 };
 
-const optionsArray = [
-  {
-    title: '1) Choose a gender',
-    category: 'gender',
-    buttons: [Gender.GIRL, Gender.UNISEX, Gender.BOY]
-  },
-  {
-    title: "2) Choose the name's popularity",
-    category: 'popularity',
-    buttons: [Popularity.TRENDY, Popularity.UNIQUE]
-  },
-  {
-    title: "3) Choose the name's length",
-    category: 'length',
-    buttons: [Length.SHORT, Length.ALL, Length.LONG]
-  }
-];
+const removeName = (index: number) => {
+  selectedNames.value = selectedNames.value.filter((name, i) => i !== index);
+};
 
 /* With script setup can everything be accessed by the temlate. */
 </script>
@@ -71,7 +75,14 @@ const optionsArray = [
       <button class="button button--rounded button--secondary" @click="computeSelectedNames">Find names</button>
     </section>
     <section class="cards">
-      <CardName v-for="(name, i) in selectedNames" :key="`name_${i}`" class="card" :name="name" />
+      <CardName
+        v-for="(name, i) in selectedNames"
+        :key="`name_${i}`"
+        class="card"
+        :name="name"
+        :index="i"
+        @remove="() => removeName(i)"
+      />
     </section>
   </main>
 </template>

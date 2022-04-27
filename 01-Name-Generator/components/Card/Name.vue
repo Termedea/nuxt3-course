@@ -1,16 +1,24 @@
 <script setup lang="ts">
 interface NameProps {
   name: string;
+  index: number;
 }
 const props = defineProps<NameProps>();
+/* Defins the kind of events that can be emitted and passed through @event when component is called */
+const emit = defineEmits(['remove']);
+
+const removeName = () => {
+  emit('remove', props.index);
+};
 </script>
 
 <template>
   <div class="card">
     <h4 class="card__name">{{ name }}</h4>
-    <span class="card__close">x</span>
+    <span @click="removeName" class="card__close">x</span>
   </div>
 </template>
+
 <style scoped>
 .card {
   background: linear-gradient(to bottom, hsl(222, 67%, 92%) 0%, hsl(222, 67%, 82%));
@@ -34,5 +42,6 @@ const props = defineProps<NameProps>();
 .card__name {
   text-transform: uppercase;
   flex-grow: 1;
+  margin: 0.8rem;
 }
 </style>
