@@ -17,6 +17,10 @@
       font-size: 16px;
     }
 
+    a,
+    a:hover {
+      color: inherit;
+    }
 
     .div-button {
       display: inline-block;
@@ -36,11 +40,15 @@
     }
 
   </style>
-  <title>Basic part 1</title>
+  <title>Basics part 1</title>
 </head>
 
 <body>
-  <h1>Hello, Vue :)</h1>
+  <h1>
+    <a href="https://www.youtube.com/watch?v=CYPZBK8zUik&list=PL4cUxeGkcC9hYYGbV60Vq3IXYNfDk8At1&index=2">Basic
+      part 1
+    </a>
+  </h1>
   <div id="app">
     <!-- Can also create the template here. Can use variables inside the app in here. -->
     <h2>HTML-template that vue controls.</h2>
@@ -62,8 +70,10 @@
       <div class="div-button" @click="changeTitle('Oathbringer')">Change title</div>
     </div>
 
+
     <!-- V-if takes it out of/inserts the DOM, v-show makes uses CSS (display block/none) -->
-    <div v-show="showBooks">Currently showing books</div>
+    <p v-show="showBooks">Currently showing books</p>
+    <p v-show="!showBooks">Currently not showing books</p>
   </div>
   <div>
     <h2>Vue doesn't control this.</h2>

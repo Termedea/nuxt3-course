@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://unpkg.com/vue@3.0.2"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+        sans-serif;
+      font-size: 16px;
+    }
+
+    a,
+    a:hover {
+      color: inherit;
+    }
+
+  </style>
+  <title>Basics part 2</title>
+</head>
+
+<body>
+  <h1>
+    <a href="https://www.youtube.com/watch?v=CYPZBK8zUik&list=PL4cUxeGkcC9hYYGbV60Vq3IXYNfDk8At1&index=3">Basic
+      part 2
+    </a>
+  </h1>
+  <div id="app">
+    <!-- Can also create the template here. Can use variables inside the app in here. -->
+    <h2>HTML-template that vue controls.</h2>
+    <!-- Shows conditionally -->
+    <button @click="toggleShowBooks">
+      <!-- Removing/injecting into DOM -->
+      <span v-if="!showBooks">Show books</span>
+      <!-- v-else works if placed directly under the v-if  -->
+      <span v-else>Hide books</span>
+    </button>
+
+    <div v-if="showBooks">
+      <p>{{ title }} - {{ author }} ({{ age }})</p>
+      <!-- View direcive - v-on:[event] (can be shortened to @click)-->
+      <!-- Doesn't need curly braces in directives -->
+      <button @click="--age">Decrease age</button>
+      <button @click="++age">Increase age</button>
+      <div class="div-button" @click="age = 35">Set age to 35</div>
+      <div class="div-button" @click="changeTitle('Oathbringer')">Change title</div>
+    </div>
+
+    <!-- V-if takes it out of/inserts the DOM, v-show makes uses CSS (display block/none) -->
+    <div v-show="showBooks">Currently showing books</div>
+  </div>
+  <div>
+    <h2>Vue doesn't control this.</h2>
+  </div>
+  <script src=" app.js">
+  </script>
+</body>
+
+</html>
