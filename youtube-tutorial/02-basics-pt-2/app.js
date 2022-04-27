@@ -1,35 +1,47 @@
-/* View app, controls the whole or part of a webpage */
-/* vue-object has a function called createApp */
-
-/* 
-React equivalent
-ReactDOM.render(
-  <React.StrictMode>    
-      <App />    
-  </React.StrictMode>,
-  document.getElementById('root')
-); 
-*/
-
 const app = Vue.createApp({
-  /* Createapp takes data, functions, component template that will be rendered in the app element.*/
-  //template: '<h2>Vue controls this</h2>'
-  /* Data function. Properties returned are accessible in template */
   data() {
     return {
-      showBooks: false,
-      title: 'The Final Empire',
-      author: 'Brandon Sanderson',
-      age: 45
+      showBooks: true,
+      onlyFavs: false,
+      url: 'http://www.thenetninja.co.uk',
+      books: [
+        {
+          title: 'Name of the Wind',
+          author: 'Patrick Rothfuss',
+          isFav: true
+        },
+        {
+          title: 'The Way of Kings',
+          author: 'Brandon Sanderson',
+          isFav: false
+        },
+        {
+          title: 'The Final Empire',
+          author: 'Brandon Sanderson',
+          isFav: false
+        }
+      ],
+      x: 0,
+      y: 0
     };
   },
   methods: {
-    changeTitle(title) {
-      console.log('you clicked me');
-      this.title = title;
+    handleEvent(e) {
+      if (e.type === 'mousemove') {
+        this.x = e.offsetX;
+        this.y = e.offsetY;
+      }
     },
-    toggleShowBooks() {
-      this.showBooks = !this.showBooks;
+    toggleFav(book) {
+      /* It knows this is the book in the object */
+      book.isFav = !book.isFav;
+    }
+  },
+  computed: {
+    /* value can be access in the template */
+    /* Works as normal data properties, but this is a property that depends on data.  */
+    filteredBooks() {
+      return this.books.filter((book) => book.isFav === true);
     }
   }
 });
