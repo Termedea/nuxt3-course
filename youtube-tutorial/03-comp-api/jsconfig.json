@@ -5,10 +5,11 @@
     "baseUrl": "./",
     "jsx": "preserve",
     "moduleResolution": "node",
-    "include": ["./src/**/*"],
+
     "paths": {
       "@/*": ["src/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
-  }
+  },
+  "include": ["./src/**/*"]
 }

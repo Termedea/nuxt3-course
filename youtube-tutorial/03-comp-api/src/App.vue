@@ -8,7 +8,7 @@
       <a
         href="https://www.youtube.com/watch?v=CYPZBK8zUik&list=PL4cUxeGkcC9hYYGbV60Vq3IXYNfDk8At1&index=3"
       >
-        Composer API part 2
+        Composer API
       </a>
     </h2>
     <!-- Template refs are instead of dom-queries -->
