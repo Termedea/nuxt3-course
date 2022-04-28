@@ -5,9 +5,7 @@
   <div class="app">
     <h1 class="app__title">{{ title }}</h1>
     <h2>
-      <a
-        href="https://www.youtube.com/watch?v=CYPZBK8zUik&list=PL4cUxeGkcC9hYYGbV60Vq3IXYNfDk8At1&index=3"
-      >
+      <a href="https://www.youtube.com/watch?v=CYPZBK8zUik&list=PL4cUxeGkcC9hYYGbV60Vq3IXYNfDk8At1&index=3">
         Composer API
       </a>
     </h2>
@@ -15,36 +13,47 @@
     <input type="text" ref="name" />
     <button @click="toggleModal">Click me</button>
     <!-- Props are optional, child will receive them as undefined.  -->
-    <Modal
-      :highlight="true"
-      :title="header"
-      :body="body"
-      @click="toggleModal"
-      v-if="showModal"
-    />
+    <teleport to=".modals" v-if="showModal">
+      <!-- Send content as slot -->
+      <Modal :highlight="true" @close="toggleModal">
+        <h3 class="modal__title">Modal content</h3>
+        <p class="modal__body">Modal body</p>
+        <!-- named slot with templates and  v-slot-directive named links -->
+        <template v-slot:links>
+          <a href="" class="">Sign up</a>
+        </template>
+      </Modal>
+      <!-- Send content as props -->
+      <!-- <Modal
+        :highlight="true"
+        :title="header"
+        :body="body"
+        @close="toggleModal"
+      /> -->
+    </teleport>
   </div>
 </template>
 
 <script>
-import Modal from './components/Modal.vue';
+import Modal from "./components/Modal.vue";
 /* Optional object, but is almost always used. Exports data similarly to object in createapp. Can use data and methods here too.*/
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Modal
   },
   data() {
     return {
-      title: 'My first Vue App',
+      title: "My first Vue App",
       showModal: false,
-      header: 'Sign up!',
-      body: 'Some text for the modal. '
+      header: "Sign up!",
+      body: "Some text for the modal. "
     };
   },
   methods: {
     handleClick() {
       /* the $ref-object holds all references set in template */
-      this.$refs.name.classList.add('active');
+      this.$refs.name.classList.add("active");
       this.$refs.name.focus();
     },
     toggleModal() {
@@ -55,7 +64,7 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&family=Radio+Canada&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&family=Radio+Canada&display=swap");
 /* Global styles */
 
 .app {
@@ -70,7 +79,7 @@ export default {
 }
 
 .app__title {
-  font-family: 'Alegreya Sans SC', Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Alegreya Sans SC", Avenir, Helvetica, Arial, sans-serif;
   padding: 0.3rem;
 
   border-bottom: 1px solid rgba(0, 128, 128, 0.1);
@@ -83,7 +92,7 @@ button {
   outline: 0;
   background: white;
   padding: 0.3rem 0.4rem;
-  font-family: 'Radio Canada', Helvetica, Arial, sans-serif;
+  font-family: "Radio Canada", Helvetica, Arial, sans-serif;
   margin-left: 4px;
   color: #666;
 }
